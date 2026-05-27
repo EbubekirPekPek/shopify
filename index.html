@@ -1750,17 +1750,7 @@
                 </h3>
                 <div id="heatmapMonths" class="heatmap-months"></div>
                 <div id="heatmapGrid" class="heatmap-grid"></div>
-                <div class="heatmap-legend">
-                    <span>Az</span>
-                    <div class="heatmap-legend-cell" style="background:rgba(239,68,68,0.8);"></div>
-                    <div class="heatmap-legend-cell" style="background:rgba(239,68,68,0.4);"></div>
-                    <div class="heatmap-legend-cell" style="background:rgba(255,255,255,0.06);"></div>
-                    <div class="heatmap-legend-cell" style="background:rgba(16,185,129,0.4);"></div>
-                    <div class="heatmap-legend-cell" style="background:rgba(16,185,129,0.9);"></div>
-                    <span>Çok</span>
-                    <span style="margin-left:0.5rem; color:#ef4444;">■ Zarar</span>
-                    <span style="margin-left:0.3rem; color:#10b981;">■ Kâr</span>
-                </div>
+                <div class="heatmap-legend" id="heatmapLegend" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem;"></div>
             </div>
 
             <!-- PROJEKSİYON -->
@@ -2015,13 +2005,28 @@
                 
                 <!-- Ürün Ekle / Güncelle Formu (Maliyet Sayfası) -->
                 <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); padding:1.25rem; border-radius:12px; margin-bottom:1.5rem;">
-                    <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-                        <input type="text" id="costUrunAdi" placeholder="Ürün adı (Shopify ile eşleşecek isim)" style="flex:2; min-width:180px; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
-                        <input type="text" id="costVaryant" placeholder="Varyant (opsiyonel)" style="flex:1; min-width:100px; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
-                        <input type="number" id="costAdet" placeholder="Stok adeti" min="0" style="flex:0.8; min-width:80px; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
-                        <input type="number" id="costMaliyet" placeholder="Birim Maliyet (₺)" min="0" step="0.01" style="flex:1; min-width:100px; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
-                        <input type="number" id="costSatisFiyati" placeholder="Satış Fiyatı (₺)" min="0" step="0.01" style="flex:1; min-width:100px; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
-                        <button onclick="urunMaliyetEkle()" class="btn-submit" style="width:auto; padding:0.5rem 1.5rem; margin:0;"><i class="ph ph-check-bold"></i> Kaydet / Ekle</button>
+                    <div style="display:flex; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+                        <div style="display:flex; flex-direction:column; gap:0.35rem; flex:2; min-width:180px;">
+                            <label for="costUrunAdi" style="font-size:0.78rem; font-weight:600; color:var(--text-muted);">Ürün Adı</label>
+                            <input type="text" id="costUrunAdi" placeholder="Ürün adı (Shopify ile eşleşecek isim)" style="width:100%; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.35rem; flex:1; min-width:100px;">
+                            <label for="costVaryant" style="font-size:0.78rem; font-weight:600; color:var(--text-muted);">Varyant (Opsiyonel)</label>
+                            <input type="text" id="costVaryant" placeholder="Varyant (opsiyonel)" style="width:100%; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.35rem; flex:0.8; min-width:80px;">
+                            <label for="costAdet" style="font-size:0.78rem; font-weight:600; color:var(--text-muted);">Stok Adeti</label>
+                            <input type="number" id="costAdet" placeholder="Stok adeti" min="0" style="width:100%; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.35rem; flex:1; min-width:100px;">
+                            <label for="costMaliyet" style="font-size:0.78rem; font-weight:600; color:var(--text-muted);">Birim Maliyet (₺)</label>
+                            <input type="number" id="costMaliyet" placeholder="Birim Maliyet (₺)" min="0" step="0.01" style="width:100%; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.35rem; flex:1; min-width:100px;">
+                            <label for="costSatisFiyati" style="font-size:0.78rem; font-weight:600; color:var(--text-muted);">Satış Fiyatı (₺)</label>
+                            <input type="number" id="costSatisFiyati" placeholder="Satış Fiyatı (₺)" min="0" step="0.01" style="width:100%; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:0.9rem;">
+                        </div>
+                        <button onclick="urunMaliyetEkle()" class="btn-submit" style="width:auto; padding:0.5rem 1.5rem; margin:0; height:38px;"><i class="ph ph-check-bold"></i> Kaydet / Ekle</button>
                     </div>
                 </div>
 
@@ -2278,6 +2283,57 @@
                         <div class="mwc"><div class="mwc-label">ROAS</div><div class="mwc-val" id="mwRoasVal">—</div><div class="mwc-chg" id="mwRoasChg"></div></div>
                         <div class="mwc"><div class="mwc-label">CPO</div><div class="mwc-val" id="mwCpoVal">—</div><div class="mwc-chg" id="mwCpoChg"></div></div>
                         <div class="mwc"><div class="mwc-label">Sipariş</div><div class="mwc-val" id="mwOrdVal">—</div><div class="mwc-chg" id="mwOrdChg"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== YENİ META ANALİZ WIDGETLARI ===== -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem;">
+                
+                <!-- Dönüşüm Hunisi (Funnel) -->
+                <div class="glass" style="padding:1.25rem 1.5rem; border-radius:16px;">
+                    <h3 style="margin:0 0 1rem 0; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+                        <i class="ph ph-funnel" style="color:var(--meta-blue);"></i> Meta Satış Hunisi (Funnel)
+                    </h3>
+                    <div id="metaFunnelContainer" style="display:flex; flex-direction:column; gap:0.75rem; align-items:center; margin-top:1.5rem;">
+                        <!-- JS ile doldurulacak -->
+                    </div>
+                </div>
+
+                <!-- Akıllı Meta Denetim Paneli (Audit) -->
+                <div class="glass" style="padding:1.25rem 1.5rem; border-radius:16px;">
+                    <h3 style="margin:0 0 1rem 0; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+                        <i class="ph ph-shield-check" style="color:var(--meta-blue);"></i> Akıllı Meta Reklam Denetimi
+                    </h3>
+                    <div id="metaAuditContainer" style="display:flex; flex-direction:column; gap:0.85rem;">
+                        <!-- JS ile doldurulacak -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bütçe Ölçeklendirme Simülatörü -->
+            <div class="glass" style="padding:1.25rem 1.5rem; border-radius:16px; margin-top:1.25rem;">
+                <h3 style="margin:0 0 0.5rem 0; font-size:1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+                    <i class="ph ph-chart-bar-horizontal" style="color:var(--meta-blue);"></i> Bütçe Ölçeklendirme Simülatörü
+                </h3>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin:0 0 1.25rem 0;">
+                    Harcamanızı ölçeklendirdiğinizde kârlılık üzerindeki olası etkileri simüle edin (ROAS çürüme katsayısı hesaba katılır).
+                </p>
+                <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap;">
+                    <div style="flex:1; min-width:250px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                            <span style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">Bütçe Ölçekleme Oranı</span>
+                            <span id="metaSimScaleVal" style="font-size:1rem; font-weight:700; color:var(--meta-blue);">+%0 (Harcama Korunuyor)</span>
+                        </div>
+                        <input type="range" id="metaSimScaleSlider" min="0" max="200" value="0" step="5" style="width:100%; accent-color:var(--meta-blue); cursor:pointer;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); margin-top:0.25rem;">
+                            <span>Mevcut</span>
+                            <span>+ %100 (2 Katı)</span>
+                            <span>+ %200 (3 Katı)</span>
+                        </div>
+                    </div>
+                    <div style="flex:1.5; min-width:300px; display:grid; grid-template-columns:repeat(3, 1fr); gap:0.75rem;" id="metaSimResultsGrid">
+                        <!-- JS ile doldurulacak -->
                     </div>
                 </div>
             </div>
@@ -3184,6 +3240,22 @@
         }
         if(tabId === 'opcost' && typeof navlungoRender === 'function') navlungoRender();
         if(tabId === 'orders' && typeof ordersRender === 'function') ordersRender();
+        if(tabId === 'meta') {
+            if(typeof renderMetaZone === 'function') {
+                const recs = [...records].filter(r=>!r.isSummary).sort((a,b)=>new Date(a.date)-new Date(b.date));
+                const needle = document.getElementById('roasZoneNeedle');
+                if(needle) {
+                    needle.style.transition = 'none';
+                    needle.style.left = '0%';
+                    needle.offsetHeight; // force reflow
+                    needle.style.transition = '';
+                }
+                renderMetaZone(recs);
+                renderMetaFunnel(recs);
+                renderMetaAudit(recs);
+                initMetaSimulator(recs);
+            }
+        }
     }
 
 
@@ -5872,6 +5944,12 @@
         });
 
         // Weeks
+        let countHighLoss = 0;
+        let countMidLoss = 0;
+        let countNeutral = 0;
+        let countMidProfit = 0;
+        let countHighProfit = 0;
+
         weeks.forEach(week => {
             const weekEl = document.createElement('div');
             weekEl.className = 'heatmap-week';
@@ -5886,9 +5964,15 @@
                     if(val > 0) {
                         const cls = ratio > 0.75 ? 'profit-4' : ratio > 0.5 ? 'profit-3' : ratio > 0.25 ? 'profit-2' : 'profit-1';
                         cell.classList.add(cls);
+                        if(ratio > 0.5) countHighProfit++;
+                        else countMidProfit++;
                     } else if(val < 0) {
                         const cls = ratio > 0.75 ? 'loss-3' : ratio > 0.5 ? 'loss-2' : 'loss-1';
                         cell.classList.add(cls);
+                        if(ratio > 0.75) countHighLoss++;
+                        else countMidLoss++;
+                    } else {
+                        countNeutral++;
                     }
                     const dayLabel = day.toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'});
                     cell.title = `${dayLabel}: ${new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).format(val)}`;
@@ -5897,6 +5981,38 @@
             });
             grid.appendChild(weekEl);
         });
+
+        // Update Legend with counts
+        const legendEl = document.getElementById('heatmapLegend');
+        if (legendEl) {
+            legendEl.innerHTML = `
+                <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:rgba(239,68,68,0.8);"></div>
+                    <span style="color:#fca5a5; font-weight:600;">Çok Zarar:</span>
+                    <span style="color:#ef4444; font-weight:700; margin-left:2px;">${countHighLoss} Gün</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(239,68,68,0.02); border:1px solid rgba(239,68,68,0.1); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:rgba(239,68,68,0.45);"></div>
+                    <span style="color:#fecaca; font-weight:600;">Hafif/Orta Zarar:</span>
+                    <span style="color:#f87171; font-weight:700; margin-left:2px;">${countMidLoss} Gün</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.15);"></div>
+                    <span style="color:var(--text-muted); font-weight:600;">Nötr (Sıfır Kâr):</span>
+                    <span style="color:var(--text-primary); font-weight:700; margin-left:2px;">${countNeutral} Gün</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(16,185,129,0.02); border:1px solid rgba(16,185,129,0.1); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:rgba(16,185,129,0.45);"></div>
+                    <span style="color:#a7f3d0; font-weight:600;">Hafif/Orta Kâr:</span>
+                    <span style="color:#34d399; font-weight:700; margin-left:2px;">${countMidProfit} Gün</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.2); padding:0.35rem 0.75rem; border-radius:20px; font-size:0.78rem;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:rgba(16,185,129,0.9);"></div>
+                    <span style="color:#6ee7b7; font-weight:600;">Yüksek Kâr:</span>
+                    <span style="color:#10b981; font-weight:700; margin-left:2px;">${countHighProfit} Gün</span>
+                </div>
+            `;
+        }
     }
 
     // ===== PROJEKSİYON =====
@@ -6570,6 +6686,275 @@
         setW('mwOrdVal',    'mwOrdChg',    l7ord + ' adet', prev7.length ? chgHtml(l7ord, p7ord, false) : '');
     }
 
+    function renderMetaFunnel(recs) {
+        const container = document.getElementById('metaFunnelContainer');
+        if(!container) return;
+        
+        let impressions = 0;
+        let clicks = 0;
+        let conversations = 0;
+        let purchases = 0;
+
+        recs.forEach(r => {
+            impressions += (r.impressions || 0);
+            clicks += (r.clicks || 0);
+            conversations += (r.conversations || 0);
+            purchases += (r.metaPurchase || 0);
+        });
+
+        if (impressions === 0) {
+            container.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem; padding:2rem 0; text-align:center;">Sayısal Gösterim/Tıklama verisi bulunmuyor.</div>`;
+            return;
+        }
+
+        const ctr = impressions > 0 ? (clicks / impressions * 100) : 0;
+
+        if (conversations > 0) {
+            const clickToMsg = clicks > 0 ? (conversations / clicks * 100) : 0;
+            const msgToSale = conversations > 0 ? (purchases / conversations * 100) : 0;
+
+            container.innerHTML = `
+                <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:0.4rem; position:relative;">
+                    <!-- Step 1: Gösterim -->
+                    <div style="width:100%; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:8px; padding:0.5rem 0.85rem; text-align:center; position:relative;">
+                        <span style="font-size:0.7rem; color:#93c5fd; font-weight:700; text-transform:uppercase;">1. Gösterim (Impressions)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#fff; margin-top:0.1rem;">${impressions.toLocaleString('tr-TR')}</div>
+                    </div>
+                    
+                    <!-- Transition 1 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; font-size:0.7rem; color:var(--text-muted); padding:0.05rem 0;">
+                        <i class="ph ph-caret-down-bold" style="color:var(--meta-blue); font-size:0.85rem;"></i>
+                        <span style="background:rgba(59,130,246,0.1); color:var(--meta-blue); padding:0.15rem 0.5rem; border-radius:12px; font-weight:700; margin-top:-2px; font-size:0.68rem;">Tıklama Oranı (CTR): %${ctr.toFixed(2)}</span>
+                    </div>
+
+                    <!-- Step 2: Tıklama -->
+                    <div style="width:85%; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:8px; padding:0.5rem 0.85rem; text-align:center;">
+                        <span style="font-size:0.7rem; color:#93c5fd; font-weight:700; text-transform:uppercase;">2. Tıklama (Link Clicks)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#fff; margin-top:0.1rem;">${clicks.toLocaleString('tr-TR')}</div>
+                    </div>
+
+                    <!-- Transition 2 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; font-size:0.7rem; color:var(--text-muted); padding:0.05rem 0;">
+                        <i class="ph ph-caret-down-bold" style="color:var(--meta-blue); font-size:0.85rem;"></i>
+                        <span style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:0.15rem 0.5rem; border-radius:12px; font-weight:700; margin-top:-2px; font-size:0.68rem;">Mesaj Başlatma Oranı: %${clickToMsg.toFixed(2)}</span>
+                    </div>
+
+                    <!-- Step 3: Conversations -->
+                    <div style="width:70%; background:rgba(59,130,246,0.22); border:1px solid rgba(59,130,246,0.4); border-radius:8px; padding:0.5rem 0.85rem; text-align:center;">
+                        <span style="font-size:0.7rem; color:#93c5fd; font-weight:700; text-transform:uppercase;">3. Mesaj Başlatma (Conversations)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#fff; margin-top:0.1rem;">${conversations.toLocaleString('tr-TR')}</div>
+                    </div>
+
+                    <!-- Transition 3 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; font-size:0.7rem; color:var(--text-muted); padding:0.05rem 0;">
+                        <i class="ph ph-caret-down-bold" style="color:var(--meta-blue); font-size:0.85rem;"></i>
+                        <span style="background:rgba(16,185,129,0.1); color:#34d399; padding:0.15rem 0.5rem; border-radius:12px; font-weight:700; margin-top:-2px; font-size:0.68rem;">Mesaj Satış Oranı: %${msgToSale.toFixed(2)}</span>
+                    </div>
+
+                    <!-- Step 4: Purchases -->
+                    <div style="width:55%; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:0.5rem 0.85rem; text-align:center;">
+                        <span style="font-size:0.7rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">4. Alışveriş (Purchases)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#10b981; margin-top:0.1rem;">${purchases.toLocaleString('tr-TR')}</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            const cvr = clicks > 0 ? (purchases / clicks * 100) : 0;
+
+            container.innerHTML = `
+                <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:0.4rem; position:relative;">
+                    <!-- Step 1: Gösterim -->
+                    <div style="width:100%; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:8px; padding:0.55rem 0.9rem; text-align:center; position:relative;">
+                        <span style="font-size:0.7rem; color:#93c5fd; font-weight:700; text-transform:uppercase;">1. Gösterim (Impressions)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#fff; margin-top:0.1rem;">${impressions.toLocaleString('tr-TR')}</div>
+                    </div>
+                    
+                    <!-- Transition 1 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; font-size:0.7rem; color:var(--text-muted); padding:0.05rem 0;">
+                        <i class="ph ph-caret-down-bold" style="color:var(--meta-blue); font-size:0.85rem;"></i>
+                        <span style="background:rgba(59,130,246,0.1); color:var(--meta-blue); padding:0.15rem 0.5rem; border-radius:12px; font-weight:700; margin-top:-2px; font-size:0.68rem;">Tıklama Oranı (CTR): %${ctr.toFixed(2)}</span>
+                    </div>
+
+                    <!-- Step 2: Clicks -->
+                    <div style="width:80%; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.3); border-radius:8px; padding:0.55rem 0.9rem; text-align:center;">
+                        <span style="font-size:0.7rem; color:#93c5fd; font-weight:700; text-transform:uppercase;">2. Tıklama (Link Clicks)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#fff; margin-top:0.1rem;">${clicks.toLocaleString('tr-TR')}</div>
+                    </div>
+
+                    <!-- Transition 2 -->
+                    <div style="display:flex; flex-direction:column; align-items:center; font-size:0.7rem; color:var(--text-muted); padding:0.05rem 0;">
+                        <i class="ph ph-caret-down-bold" style="color:var(--meta-blue); font-size:0.85rem;"></i>
+                        <span style="background:rgba(16,185,129,0.1); color:#34d399; padding:0.15rem 0.5rem; border-radius:12px; font-weight:700; margin-top:-2px; font-size:0.68rem;">Dönüşüm Oranı (CVR): %${cvr.toFixed(2)}</span>
+                    </div>
+
+                    <!-- Step 3: Purchases -->
+                    <div style="width:60%; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:0.55rem 0.9rem; text-align:center;">
+                        <span style="font-size:0.7rem; color:#a7f3d0; font-weight:700; text-transform:uppercase;">3. Alışveriş (Purchases)</span>
+                        <div style="font-size:1.1rem; font-weight:800; color:#10b981; margin-top:0.1rem;">${purchases.toLocaleString('tr-TR')}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function renderMetaAudit(recs) {
+        const container = document.getElementById('metaAuditContainer');
+        if(!container) return;
+
+        let impressions = 0;
+        let clicks = 0;
+        let purchases = 0;
+        let spend = 0;
+        let freqs = [];
+
+        recs.forEach(r => {
+            impressions += (r.impressions || 0);
+            clicks += (r.clicks || 0);
+            purchases += (r.metaPurchase || 0);
+            spend += (r.adSpend || 0);
+            if (r.frequency > 0) freqs.push(r.frequency);
+        });
+
+        if (impressions === 0) {
+            container.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem; padding:2rem 0; text-align:center;">Analiz edilecek veri bulunmuyor.</div>`;
+            return;
+        }
+
+        const ctr = impressions > 0 ? (clicks / impressions * 100) : 0;
+        const cvr = clicks > 0 ? (purchases / clicks * 100) : 0;
+        const cpm = impressions > 0 ? (spend / impressions * 1000) : 0;
+        const avgFreq = freqs.length > 0 ? (freqs.reduce((s,f)=>s+f,0)/freqs.length) : 1.3;
+
+        function makeAuditItem(name, valueStr, target, status, msg) {
+            let bg, borderColor, iconColor, iconClass, badgeBg, statusText;
+            if (status === 'success') {
+                bg = 'rgba(16,185,129,0.04)'; borderColor = 'rgba(16,185,129,0.2)'; iconColor = '#10b981'; iconClass = 'ph ph-check-circle-bold'; badgeBg = 'rgba(16,185,129,0.15)'; statusText = 'İyi';
+            } else if (status === 'warning') {
+                bg = 'rgba(245,158,11,0.04)'; borderColor = 'rgba(245,158,11,0.2)'; iconColor = '#f59e0b'; iconClass = 'ph ph-warning-circle-bold'; badgeBg = 'rgba(245,158,11,0.15)'; statusText = 'Orta';
+            } else {
+                bg = 'rgba(239,68,68,0.04)'; borderColor = 'rgba(239,68,68,0.2)'; iconColor = '#ef4444'; iconClass = 'ph ph-x-circle-bold'; badgeBg = 'rgba(239,68,68,0.15)'; statusText = 'Kritik';
+            }
+
+            return `
+                <div style="display:flex; align-items:flex-start; gap:0.75rem; background:${bg}; border:1px solid ${borderColor}; padding:0.65rem 0.85rem; border-radius:10px;">
+                    <div style="font-size:1.15rem; color:${iconColor}; margin-top:0.05rem;"><i class="${iconClass}"></i></div>
+                    <div style="flex:1;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.15rem;">
+                            <span style="font-weight:700; font-size:0.8rem; color:var(--text-primary);">${name}</span>
+                            <span style="font-size:0.62rem; font-weight:800; padding:0.1rem 0.4rem; border-radius:4px; background:${badgeBg}; color:${iconColor}; text-transform:uppercase;">${statusText}</span>
+                        </div>
+                        <div style="font-size:0.8rem; font-weight:700; margin-bottom:0.2rem; color:#fff;">Mevcut Değer: ${valueStr} <span style="font-size:0.7rem; font-weight:500; color:var(--text-muted); margin-left:0.3rem;">(Hedef: ${target})</span></div>
+                        <p style="margin:0; font-size:0.72rem; color:var(--text-muted); line-height:1.45;">${msg}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        let ctrStatus = 'success', ctrMsg = 'Kreatiflerinizin tıklama performansı yüksek. Kanca ve görsel diliniz hedef kitleyle uyumlu.';
+        if (ctr < 1.0) {
+            ctrStatus = 'error'; ctrMsg = 'Kreatiflerinizin kancası (hook) zayıf. Reklam görselini veya ilk 3 saniyelik video kancasını acilen test edin.';
+        } else if (ctr < 1.8) {
+            ctrStatus = 'warning'; ctrMsg = 'Ortalama kanca gücü. Tıklanabilirliği artırmak için teklifi veya başlığı daha belirgin yapabilirsiniz.';
+        }
+
+        let cvrStatus = 'success', cvrMsg = 'Site içi dönüşüm mükemmel. Reklamı tıklayan kullanıcılar sunduğunuz teklife yüksek ilgi gösteriyor.';
+        if (cvr < 1.5) {
+            cvrStatus = 'error'; cvrMsg = 'Tıklayan kullanıcılar sitede satın alım yapmıyor. Sepet adımlarını, fiyatlandırmayı ve ürün açıklamalarını kontrol edin.';
+        } else if (cvr < 2.5) {
+            cvrStatus = 'warning'; cvrMsg = 'Dönüşüm oranı normal seviyede. Güven unsurlarını artırarak (ücretsiz kargo, müşteri yorumları) CVR artırılabilir.';
+        }
+
+        let freqStatus = 'success', freqMsg = 'Kitle yorgunluğu yok. Reklamlarınız kitleye makul seviyede gösteriliyor.';
+        if (avgFreq > 2.5) {
+            freqStatus = 'error'; freqMsg = 'Yüksek sıklık! Aynı reklamlar kitleye çok sık gösteriliyor, reklam yorgunluğu başlamış. Kreatifleri yenileyin veya hedef kitleyi genişletin.';
+        } else if (avgFreq > 1.8) {
+            freqStatus = 'warning'; freqMsg = 'Frekans yükseliyor. Kreatif performanslarını izlemeye başlayın.';
+        }
+
+        container.innerHTML = `
+            ${makeAuditItem('Kreatif Tıklama (CTR)', `%${ctr.toFixed(2)}`, '> %1.80', ctrStatus, ctrMsg)}
+            ${makeAuditItem('Dönüşüm Oranı (CVR)', `%${cvr.toFixed(2)}`, '> %2.50', cvrStatus, cvrMsg)}
+            ${makeAuditItem('Reklam Sıklığı (Freq)', avgFreq.toFixed(2), '< 1.80', freqStatus, freqMsg)}
+        `;
+    }
+
+    function initMetaSimulator(recs) {
+        const slider = document.getElementById('metaSimScaleSlider');
+        const scaleValLabel = document.getElementById('metaSimScaleVal');
+        const resultsGrid = document.getElementById('metaSimResultsGrid');
+        if(!slider || !scaleValLabel || !resultsGrid) return;
+
+        let totalSpend = 0;
+        let totalRevenue = 0;
+        let totalPurchases = 0;
+        let totalProdCost = 0;
+        let totalOpCost = 0;
+
+        recs.forEach(r => {
+            totalSpend += (r.adSpend || 0);
+            totalRevenue += (r.revenue || 0);
+            totalPurchases += (r.metaPurchase || 0);
+            totalProdCost += (r.productCost || 0);
+            totalOpCost += (r.opCost || 0);
+        });
+
+        if (totalSpend === 0) {
+            resultsGrid.innerHTML = `<div style="grid-column: span 3; color:var(--text-muted); font-size:0.85rem; text-align:center; padding:1rem 0;">Simülasyon için yeterli harcama verisi bulunmuyor.</div>`;
+            return;
+        }
+
+        const avgRoas = totalSpend > 0 ? totalRevenue / totalSpend : 0;
+        const avgCpa = totalPurchases > 0 ? totalSpend / totalPurchases : 0;
+        const prodCostRatio = totalRevenue > 0 ? totalProdCost / totalRevenue : 0.35;
+        const currentNetProfit = totalRevenue - totalSpend - totalProdCost - totalOpCost;
+
+        function updateSimulation() {
+            const scalePct = parseInt(slider.value);
+            scaleValLabel.textContent = `+ %${scalePct} ${scalePct === 0 ? '(Mevcut Harcama)' : ''}`;
+
+            const scaleRatio = scalePct / 100;
+            const newSpend = totalSpend * (1 + scaleRatio);
+            
+            const decay = 1 / (1 + scaleRatio * 0.25);
+            const newRoas = avgRoas * decay;
+            const newRevenue = newSpend * newRoas;
+            const newProdCost = newRevenue * prodCostRatio;
+            const newCpa = avgCpa * (1 + scaleRatio * 0.25);
+            
+            const newNetProfit = newRevenue - newSpend - newProdCost - totalOpCost;
+            const profitDiff = newNetProfit - currentNetProfit;
+
+            resultsGrid.innerHTML = `
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:0.65rem 0.85rem; border-radius:10px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Simüle Edilen ROAS</div>
+                    <div style="font-size:1.35rem; font-weight:800; color:var(--meta-blue); margin-top:0.25rem;">${newRoas.toFixed(2)}x</div>
+                    <div style="font-size:0.65rem; color:#ef4444; font-weight:700; margin-top:0.15rem;">Çürüme: -%${( (1 - decay)*100 ).toFixed(0)}</div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:0.65rem 0.85rem; border-radius:10px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Tahmini Net Kâr</div>
+                    <div style="font-size:1.35rem; font-weight:800; color:${newNetProfit >= 0 ? '#10b981' : '#ef4444'}; margin-top:0.25rem;">
+                        ${new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(newNetProfit)}
+                    </div>
+                    <div style="font-size:0.65rem; color:${profitDiff >= 0 ? '#10b981' : '#ef4444'}; font-weight:700; margin-top:0.15rem;">
+                        ${profitDiff >= 0 ? '+' : ''}${new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(profitDiff)} Fark
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:0.65rem 0.85rem; border-radius:10px; text-align:center;">
+                    <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Tahmini CPO (CPA)</div>
+                    <div style="font-size:1.35rem; font-weight:800; color:#fff; margin-top:0.25rem;">
+                        ${new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(newCpa)}
+                    </div>
+                    <div style="font-size:0.65rem; color:var(--text-muted); font-weight:600; margin-top:0.15rem;">Harcama: ${new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(newSpend)}</div>
+                </div>
+            `;
+        }
+
+        slider.oninput = updateSimulation;
+        updateSimulation();
+    }
+
     function renderMetaScatter(recs) {
         const sec = document.getElementById('metaScatterSection');
         const canvas = document.getElementById('metaScatterChart');
@@ -6970,6 +7355,9 @@
         // Meta analiz bölümleri
         renderMetaZone(allDailyRecs2);
         renderMetaWeekly(allDailyRecs2);
+        renderMetaFunnel(allDailyRecs2);
+        renderMetaAudit(allDailyRecs2);
+        initMetaSimulator(allDailyRecs2);
         // Simulator show/hide + init
         const simSec = document.getElementById('simSection');
         if(simSec) simSec.style.display = '';
